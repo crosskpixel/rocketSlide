@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PPTX2HTML</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="./css/font-awesome.min.css">
+	<link rel="stylesheet" href="./css/pptx2html.css">
+	<link rel="stylesheet" href="./css/custom.css" />
+	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script type="text/javascript" src="./js/FileSaver.min.js"></script>
+	<script type="text/javascript" src="./js/lz-string.min.js"></script>
+	<script type="text/javascript" src="./js/qrcode.min.js"></script>
+	<style>
+		.btn_slides {
+			display: none;
+		}
+	</style>
+	<script>
+		var io = io("https://webapp.mactus.com.br/");
+
+
+		function isMobile() {
+			if (navigator.userAgent.match(/Android/i)
+				|| navigator.userAgent.match(/webOS/i)
+				|| navigator.userAgent.match(/iPhone/i)
+				|| navigator.userAgent.match(/iPad/i)
+				|| navigator.userAgent.match(/iPod/i)
+				|| navigator.userAgent.match(/BlackBerry/i)
+				|| navigator.userAgent.match(/Windows Phone/i)
+			) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		function generateHexString(length) {
+			var ret = "";
+			while (ret.length < length) {
+				ret += Math.random().toString(16).substring(2);
+			}
+			return ret.substring(0, length);
+		}
+		var input_token = "";
+		let token = "";
+
+
+		$(document).ready(function () {
+			if (isMobile()) {
+				$("#smartphone").css("display", "block");
+				if (window.localStorage.getItem("INPUT_TOKEN_QR")) {
+					input_token = window.localStorage.getItem("INPUT_TOKEN_QR");
+					io.emit("action", input_token);
+					$("#formulario_token").css("display", "none");
+					$("#scan").css("display", "none");
+					$(".btn_slides").css("display", "block");
+					$("#logout").css("display", "block");
+				}
+				//mostra formulario
+			} else {
+				token = generateHexString(5);
+				window.localStorage.setItem("TOKEN_SOCKET", token);
+				$("#desktop").css("display", "block");
+				$("#token").html(token);
+				var qrcode = new QRCode(token);
+				var svg = qrcode.svg();
+				document.getElementById("img_qrcode").innerHTML = svg;
+				io.on(token, function (data) {
+					console.log(data);
+					switch (data.action) {
+						case "OPEN_VIEW":
+							window.location.href = "./reveal/visualizador.html"
+							break;
+					}
+				});
+			}
+
+			$("#btn_next").click(function () {
+				io.emit("nextSlide", input_token);
+			});
+
+			$("#btn_previous").click(function () {
+				io.emit("previousSlide", input_token);
+			});
+
+			$("#conectar").click(function () {
+				input_token = $("#input_token").val();
+				//possivel retirada
+				io.emit("action", input_token);
+				$("#formulario_token").css("display", "none");
+				$("#scan").css("display", "none");
+				$(".btn_slides").css("display", "block");
+				$("#logout").css("display", "block");
+				//
+			});
+			$("#scan").click(function () {
+				window.location.href = "./qrcode/dist";
+			});
+			$("#logout").click(function () {
+				window.localStorage.clear();
+				window.location.reload();
+			});
+
+		});
+		function animation() {
+			var element = document.getElementById("ball"),
+				time = Date.now();
+			element.style.left = (50 + Math.cos(time / 500) * 25) + "px";
+			element.style.top = (50 + Math.sin(time / 500) * 25) + "px";
+
+			setTimeout(animation, 1000 / 30);
+		}
+		animation();
+
+	</script>
+</head>
+
+<body>
+	<div style="display:none;" id="desktop">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3" style="text-align: center;">
+					<!-- Split button -->
+					<div class="btn-group">
+						<div class="fileUpload btn btn-success">
+							<span>
+								<i class="glyphicon glyphicon-upload"></i> Selecione o arquivo PowerPoint</span>
+							<input id="uploadBtn" type="file" class="upload" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+							/>
+						</div>
+						<button id="to-reveal-btn" class="btn btn-success"> Iniciar Apresentação </button>
+
+					</div>
+
+					<!-- Modal -->
+					<div class="modal fade" id="slideContentModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">Raw content of slides</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<label for="comment">Content:</label>
+										<textarea class="form-control" rows="5" id="comment"></textarea>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button id="download-btn2" type="button" class="btn btn-primary">Download</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<br>
+
+			<div style="display:none;" class="row grupo_elementos">
+				<div class="col-md-6 col-md-offset-3" style="text-align: center;">
+					<img id="pptx-thumb" class="img-thumbnail" src="" alt="">
+				</div>
+			</div>
+
+			<br>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div style="display: none;" class="grupo_elementos">
+						<div class="progress">
+							<div style="color:black;" id="load-progress" class="progress-bar progress-bar-striped" style="transition: none;" role="progressbar"
+							 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+								0%
+							</div>
+						</div>
+						<div>
+							<div id="img_qrcode">
+
+							</div>
+							TOKEN:
+							<span id="token"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div style="display:none;" class="row">
+				<div class="col-lg-12">
+					<div id="error_block" class="alert alert-danger hidden">
+						You will need a recent browser to use this demo :(
+					</div>
+					<div id="info_block" class="alert alert-success" role="alert">
+
+					</div>
+					<div id="result_block" class="hidden">
+						<h3>Slides:</h3>
+						<div id="result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/pptx2html.js"></script>
+
+		<link rel="stylesheet" href="css/nv.d3.min.css">
+		<script type="text/javascript" src="js/chart/d3.min.js"></script>
+		<script type="text/javascript" src="js/chart/nv.d3.min.js"></script>
+	</div>
+	<div style="display: none;" id="smartphone">
+
+		<!--<div id="formulario_token" class="form-group">
+			<label>Informe o Token</label>
+			<input type="text" class="form-control" id="input_token" />
+			<button id="conectar" class="btn btn-primary block">
+				Conectar
+			</button>
+		</div> -->
+		<div id="formulario_token" class="col-sm-12" style="padding:20px;">
+			<label>Informe o Código</label>
+			<div class="input-group">
+				<input type="text" id="input_token" class="form-control" />
+				<div class="input-group-btn">
+					<button style="background-color:#233f78" id="conectar" class="btn btn-primary">
+						Conectar
+					</button>
+				</div>
+			</div>
+			<label style="margin-left:50%;">Ou</label>
+			<button style="background-color:#233f78" class="btn-lg btn-primary btn-block" id="scan">Scannear Código</button>
+		</div>
+
+		<button style="display:none;" class="btn-lg btn-block btn-danger" id="logout">Encerrar Sessão</button>
+
+		<div style="position:relative;">
+			<div class="row">
+				<div class="col-xs-1"></div>
+				<div class="col-xs-9">
+					<div style="margin-left:15px;" id="ball"></div>
+				</div>
+				<div class="col-xs-2"></div>f
+			</div>
+			<label style="font-size:30px;padding:3%;padding-left:28%;padding-top:65%;position:relative;color:#e97040">RocketSlide</label>
+		</div>
+	</div>
+
+	<div class="btn_slides">
+		<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color: rgb(89, 19, 164);" class="row">
+			<div class="col-xs-6" style="margin:0;padding: 0;">
+				<div id="btn_previous" style="background-color: #233f78;border:1px solid #fff;width:100%;height: 180px;padding: 50px;text-align: center;">
+					<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>
+				</div>
+			</div>
+			<div class="col-xs-6" style="margin:0;padding: 0;">
+				<div id="btn_next" style="background-color: #233f78;border:1px solid #fff;width:100%;height: 180px;padding: 50px;text-align: center;">
+					<i style="color:white;font-size:68px;" class="fa fa-fast-forward" aria-hidden="true"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+</body>
+
+</html>

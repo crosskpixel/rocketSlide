@@ -1,0 +1,12 @@
+#ball{
+    width:                250px;
+    height:               300px;
+    position:             absolute;
+    left:                 0px;
+    top:                  10px;
+    background-image: url("../img/rocket.gif");
+    -moz-border-radius:    50%;
+    -webkit-border-radius: 50%;
+    -o-border-radius:      50%;
+    -ms-border-radius:     50%;
+  }

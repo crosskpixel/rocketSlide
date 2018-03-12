@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>PPTX2HTML</title>
+	<title>RocketSlide</title>
 
 	<!-- Bootstrap CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,12 +18,54 @@
 	<script type="text/javascript" src="./js/FileSaver.min.js"></script>
 	<script type="text/javascript" src="./js/lz-string.min.js"></script>
 	<script type="text/javascript" src="./js/qrcode.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<style>
 		.btn_slides {
 			display: none;
 		}
+
+		svg path,
+		svg rect {
+			fill: #FF6700;
+		}
 	</style>
 	<script>
+		$(document).ready(function () {
+
+			var content = $('.content');
+			var currentItem = content.filter('.active');
+			var steps = $('.card').filter('.steps');
+			var inactive1 = $('.inactive-1');
+			var inactive2 = $('.inactive-2');
+
+			$('.button').click(function () {
+				var nextItem = currentItem.next();
+				var lastItem = content.last();
+				var contentFirst = content.first();
+
+				currentItem.removeClass('active');
+
+				if (currentItem.is(lastItem)) {
+					currentItem = contentFirst.addClass('active');
+					currentItem.css({ 'right': '10%', 'opacity': '1' });
+					$('.step').animate({ width: '33%' });
+					inactive1.animate({ height: '8px', marginLeft: '20px', marginRight: '20px' }, 100);
+					inactive2.animate({ height: '8px', marginLeft: '10px', marginRight: '10px' }, 100);
+
+				} else if (currentItem.is(contentFirst)) {
+					currentItem.animate({ opacity: 0 }, 1000);
+					currentItem = nextItem.addClass('active');
+					$('.step').animate({ width: '66%' });
+					inactive2.animate({ height: '0', marginLeft: '0px', marginRight: '0px' }, 100);
+
+				} else {
+					currentItem = nextItem.addClass('active');
+					$('.step').animate({ width: '100%' });
+					inactive1.animate({ height: '0', marginLeft: '0px', marginRight: '0px' }, 100);
+				}
+			});
+
+		});
 		var io = io("https://webapp.mactus.com.br/");
 
 
@@ -51,9 +93,8 @@
 		}
 		var input_token = "";
 		let token = "";
-
-
 		$(document).ready(function () {
+			$(".origin").html(window.location.origin);
 			if (isMobile()) {
 				$("#smartphone").css("display", "block");
 				if (window.localStorage.getItem("INPUT_TOKEN_QR")) {
@@ -74,13 +115,14 @@
 				var svg = qrcode.svg();
 				document.getElementById("img_qrcode").innerHTML = svg;
 				io.on(token, function (data) {
-					console.log(data);
 					switch (data.action) {
 						case "OPEN_VIEW":
-							window.location.href = "./reveal/visualizador.html"
+							$("#carregando").css("display", "block");
+							setInterval(() => $("#to-reveal-btn").click(), 1000);
 							break;
 					}
 				});
+
 			}
 
 			$("#btn_next").click(function () {
@@ -101,16 +143,23 @@
 				$("#logout").css("display", "block");
 				//
 			});
+
 			$("#scan").click(function () {
 				window.location.href = "./qrcode/dist";
 			});
+
 			$("#logout").click(function () {
+				io.emit("close", input_token);
 				window.localStorage.clear();
 				window.location.reload();
 			});
 
+			$('#myModal').on('shown.bs.modal', function () {
+				$('#myInput').focus()
+			})
+
 		});
-		function animation() {
+/*		function animation() {
 			var element = document.getElementById("ball"),
 				time = Date.now();
 			element.style.left = (50 + Math.cos(time / 500) * 25) + "px";
@@ -118,109 +167,173 @@
 
 			setTimeout(animation, 1000 / 30);
 		}
-		animation();
+		animation();*/
 
 	</script>
 </head>
 
 <body>
 	<div style="display:none;" id="desktop">
-		<div class="container">
+		<div class="ct" id="t1">
+			<div class="ct" id="t2">
+				<div class="ct" id="t3">
+					<div class="ct" id="t4">
+						<div class="ct" id="t5">
+							<ul id="menu">
 
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3" style="text-align: center;">
-					<!-- Split button -->
-					<div class="btn-group">
-						<div class="fileUpload btn btn-success">
-							<span>
-								<i class="glyphicon glyphicon-upload"></i> Selecione o arquivo PowerPoint</span>
-							<input id="uploadBtn" type="file" class="upload" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-							/>
-						</div>
-						<button id="to-reveal-btn" class="btn btn-success"> Iniciar Apresentação </button>
-
-					</div>
-
-					<!-- Modal -->
-					<div class="modal fade" id="slideContentModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel">Raw content of slides</h4>
-								</div>
-								<div class="modal-body">
-									<div class="form-group">
-										<label for="comment">Content:</label>
-										<textarea class="form-control" rows="5" id="comment"></textarea>
+								<br>
+								<br>
+								<br>
+								<br>
+								<a href="#t1">
+									<li class="icon fa fa-rocket" id="uno"></li>
+								</a>
+								<!--<a href="#t2">
+									<li class="icon fa fa-dribbble" id="dos"></li>
+								</a>
+								<a href="#t3">
+									<li class="icon fa fa-rocket" id="tres"></li>
+								</a>
+								<a href="#t4">
+									<li class="icon fa fa-dribbble" id="cuatro"></li>
+								</a>
+								<a href="#t5">
+									<li class="icon fa fa-plus-circle" id="cinco"></li>
+								</a> -->
+							</ul>
+							<div class="page" id="p1">
+								<h1 style="padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 23px;color: #e97040;">&nbsp;&nbsp;&nbsp;RocketSlide</h1>
+								<section style="width: 80%;height: 497px;top: 8%;" class="icon">
+									<!-- 1 -->
+									<div class="row">
+										<div class="col-md-6 col-md-offset-3" style="text-align: center;">
+											<div class="btn-group">
+												<div style="background-color: #233f78;" class="fileUpload btn btn-primary">
+													<span>
+														<i class="glyphicon glyphicon-upload"></i> Selecione o arquivo PowerPoint</span>
+													<input id="uploadBtn" type="file" class="upload" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+													/>
+													<input id="to-reveal-btn" type="hidden" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-offset-2">
+											<div id="carregando" style="display: none;">
+												<span style="color:#e97040;font-size:25px;bottom:10px;position: relative;">Carrregando</span>
+												<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+												 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+													<path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+														<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"
+														/>
+													</path>
+												</svg>
+											</div>
+										</div>
+										<div class="col-md-offset-1"></div>
 									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									<button id="download-btn2" type="button" class="btn btn-primary">Download</button>
-								</div>
+									<div class="row">
+										<div class="col-lg-3"></div>
+										<div class="col-lg-6">
+											<div style="display: none;" class="grupo_elementos">
+												<div class="progress">
+													<div style="color:black;" id="load-progress" class="progress-bar progress-bar-striped" style="transition: none;" role="progressbar"
+													 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+														0%
+													</div>
+												</div>
+												<div>
+													<div style="text-align: center;" id="img_qrcode" data-toggle="collapse" data-target="#collapseExample" aria-controls="collapseExample">
+
+													</div>
+													<div style="text-align: center;color:black;">
+														<h4 style="font-weight: bold;">Código:
+															<span id="token"></span>
+														</h4>
+													</div>
+												</div>
+											</div>
+											<div class="requirimentos" style="font-size: 20px;color:#e97040;">
+												<div class="inner-container">
+													<div class="card inactive-1"></div>
+													<div class="card inactive-2"></div>
+													<div class="card">
+														<div class="content active">
+															<br>
+															<h1>Passo 1</h1>
+															<p>Abra este website em seu smartphone
+																<i class="em em-coffee"></i>
+															</p>
+															<a class="button" href="#">Proximo passo &rarr;</a>
+														</div>
+														<div class="content">
+															<br>
+															<h1>Passo 2</h1>
+															<p>Selecione o arquivo PowerPoint 2010+</p>
+															<a class="button" href="#"> Proximo Passo &rarr;</a>
+														</div>
+														<div class="content">
+															<br>
+															<h1>Passo 3</h1>
+															<p>
+																Scaneie o QR Code com o smartphone
+															</p>
+															<a class="button" href="#">Apresente &rarr;</a>
+														</div>
+														<div class="progress-container">
+															<div class="step"></div>
+														</div>
+													</div>
+												</div>
+												<br>
+												<span>Requisitos: Microsoft Office 2010 ou posterior.
+													<br> Atenção: Grandes arquivos poderá ocorrer lentidão.</span>
+											</div>
+										</div>
+										<div class="col-lg-3"></div>
+									</div>
+								</section>
 							</div>
-						</div>
-					</div>
-				</div>
+							<div class="page" id="p2">
+								<section style="width: 80%;height: 497px;top: 8%;background-color: #415fc1b8;border-color: red;border: 1px solid black;box-shadow: 1px 1px 1px black;"
+								 class="icon">
 
-			</div>
 
-			<br>
-
-			<div style="display:none;" class="row grupo_elementos">
-				<div class="col-md-6 col-md-offset-3" style="text-align: center;">
-					<img id="pptx-thumb" class="img-thumbnail" src="" alt="">
-				</div>
-			</div>
-
-			<br>
-
-			<div class="row">
-				<div class="col-lg-12">
-					<div style="display: none;" class="grupo_elementos">
-						<div class="progress">
-							<div style="color:black;" id="load-progress" class="progress-bar progress-bar-striped" style="transition: none;" role="progressbar"
-							 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-								0%
+								</section>
 							</div>
+
 						</div>
-						<div>
-							<div id="img_qrcode">
-
-							</div>
-							TOKEN:
-							<span id="token"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div style="display:none;" class="row">
-				<div class="col-lg-12">
-					<div id="error_block" class="alert alert-danger hidden">
-						You will need a recent browser to use this demo :(
-					</div>
-					<div id="info_block" class="alert alert-success" role="alert">
-
-					</div>
-					<div id="result_block" class="hidden">
-						<h3>Slides:</h3>
-						<div id="result"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/pptx2html.js"></script>
 
-		<link rel="stylesheet" href="css/nv.d3.min.css">
-		<script type="text/javascript" src="js/chart/d3.min.js"></script>
-		<script type="text/javascript" src="js/chart/nv.d3.min.js"></script>
+
+
+
+		<div style="display:none;" class="row">
+			<div class="col-lg-12">
+				<div id="error_block" class="alert alert-danger hidden">
+					You will need a recent browser to use this demo :(
+				</div>
+				<div id="info_block" class="alert alert-success" role="alert">
+
+				</div>
+				<div id="result_block" class="hidden">
+					<h3>Slides:</h3>
+					<div id="result"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/pptx2html.js"></script>
+
+	<link rel="stylesheet" href="css/nv.d3.min.css">
+	<script type="text/javascript" src="js/chart/d3.min.js"></script>
+	<script type="text/javascript" src="js/chart/nv.d3.min.js"></script>
 	</div>
 	<div style="display: none;" id="smartphone">
 
@@ -232,49 +345,46 @@
 			</button>
 		</div> -->
 		<div id="formulario_token" class="col-sm-12" style="padding:20px;">
-			<label>Informe o Código</label>
+			<label>Iniciar Sessão</label>
 			<div class="input-group">
-				<input type="text" id="input_token" class="form-control" />
+				<input placeholder="Digite o código de sessão" type="text" id="input_token" class="form-control" />
 				<div class="input-group-btn">
 					<button style="background-color:#233f78" id="conectar" class="btn btn-primary">
-						Conectar
+						<span style="font-weight: bold;font-size: 15px;">Conectar</span>
 					</button>
 				</div>
 			</div>
-			<label style="margin-left:50%;">Ou</label>
-			<button style="background-color:#233f78" class="btn-lg btn-primary btn-block" id="scan">Scannear Código</button>
+			<label style="padding-left:45%;">Ou</label>
+
+			<button style="background-color:#233f78" class="btn-lg btn-primary btn-block" id="scan">
+				<span style="font-weight: bold;font-size: 25px;">Scannear Código</span>
+			</button>
 		</div>
 
 		<button style="display:none;" class="btn-lg btn-block btn-danger" id="logout">Encerrar Sessão</button>
-
-		<div style="position:relative;">
-			<div class="row">
-				<div class="col-xs-1"></div>
-				<div class="col-xs-9">
-					<div style="margin-left:15px;" id="ball"></div>
-				</div>
-				<div class="col-xs-2"></div>f
-			</div>
-			<label style="font-size:30px;padding:3%;padding-left:28%;padding-top:65%;position:relative;color:#e97040">RocketSlide</label>
+		<div style="position:relative;padding-top: 20px;">
+			<h1 style="font-family: monospace;letter-spacing: 5px;color: #e97040;font-size:28px;">&nbsp;&nbsp;&nbsp;RocketSlide</h1>
 		</div>
-	</div>
 
-	<div class="btn_slides">
-		<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color: rgb(89, 19, 164);" class="row">
-			<div class="col-xs-6" style="margin:0;padding: 0;">
-				<div id="btn_previous" style="background-color: #233f78;border:1px solid #fff;width:100%;height: 180px;padding: 50px;text-align: center;">
-					<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>
+
+		<div class="btn_slides">
+			<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color: rgb(89, 19, 164);" class="row">
+				<div class="col-xs-6" style="margin:0;padding: 0;">
+					<div id="btn_previous" style="background-color: #233f78;border:1px solid rgb(105, 21, 248);width:100%;height: 180px;padding: 50px;text-align: center;">
+						<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>
+					</div>
 				</div>
-			</div>
-			<div class="col-xs-6" style="margin:0;padding: 0;">
-				<div id="btn_next" style="background-color: #233f78;border:1px solid #fff;width:100%;height: 180px;padding: 50px;text-align: center;">
-					<i style="color:white;font-size:68px;" class="fa fa-fast-forward" aria-hidden="true"></i>
+				<div class="col-xs-6" style="margin:0;padding: 0;">
+					<div id="btn_next" style="background-color: #233f78;border:1px solid rgb(77, 24, 250);width:100%;height: 180px;padding: 50px;text-align: center;">
+						<i style="color:white;font-size:68px;" class="fa fa-fast-forward" aria-hidden="true"></i>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	</div>
+
+
 </body>
 
 </html>

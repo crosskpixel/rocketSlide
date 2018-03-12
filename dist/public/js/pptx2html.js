@@ -86,6 +86,10 @@ $(document).ready(function () {
 				}
 			})(fileName);
 			reader.readAsArrayBuffer(fileName);
+			//
+
+			$(".requirimentos").css("display", "none");
+
 		});
 
 		$("#slideContentModel").on("show.bs.modal", function (e) {
@@ -147,7 +151,7 @@ Reveal.initialize({\
 		$("#to-reveal-btn").click(function () {
 			if (localStorage) {
 				localStorage.setItem("slides", LZString.compressToUTF16($result.html()));
-				window.open("./reveal/visualizador.html", "_blank");
+				window.location.href = "./reveal/visualizador.html";
 			} else {
 				alert("Browser don't support Web Storage!");
 			}

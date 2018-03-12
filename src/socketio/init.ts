@@ -8,8 +8,12 @@ module.exports = (io) => {
         });
 
         client.on("action", (token) => {
-            console.log(token);
             io.sockets.emit(token, { action: "OPEN_VIEW" });
+        });
+
+        client.on("close", (token) => {
+            console.log("FECHANDO");
+            io.sockets.emit(token, { action: "CLOSE" });
         })
     });
 }

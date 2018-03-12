@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="pt-br">
 
 <head>
 	<meta charset="utf-8">
-	<title>Demo</title>
+	<title>RocketSlide</title>
 	<link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/pptx.css" id="theme">
 
@@ -14,7 +14,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 
 	<script>
-		var io = io("https://webapp.mactus.com.br/");
+		var io = io(window.location.origin);
 		$(document).ready(function () {
 			var token = window.localStorage.getItem("TOKEN_SOCKET");
 			console.log(token);
@@ -25,6 +25,10 @@
 						break;
 					case "PREVIOUS":
 						$(".navigate-left").click();
+						break;
+					case "CLOSE":
+						window.localStorage.clear();
+						window.location.href = window.location.origin;
 						break;
 				}
 			});

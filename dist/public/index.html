@@ -6,10 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>RocketSlide</title>
-
-	<!-- Bootstrap CSS -->
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-
 	<link rel="stylesheet" href="./css/font-awesome.min.css">
 	<link rel="stylesheet" href="./css/pptx2html.css">
 	<link rel="stylesheet" href="./css/custom.css" />
@@ -30,45 +29,7 @@
 		}
 	</style>
 	<script>
-		$(document).ready(function () {
-
-			var content = $('.content');
-			var currentItem = content.filter('.active');
-			var steps = $('.card').filter('.steps');
-			var inactive1 = $('.inactive-1');
-			var inactive2 = $('.inactive-2');
-
-			$('.button').click(function () {
-				var nextItem = currentItem.next();
-				var lastItem = content.last();
-				var contentFirst = content.first();
-
-				currentItem.removeClass('active');
-
-				if (currentItem.is(lastItem)) {
-					currentItem = contentFirst.addClass('active');
-					currentItem.css({ 'right': '10%', 'opacity': '1' });
-					$('.step').animate({ width: '33%' });
-					inactive1.animate({ height: '8px', marginLeft: '20px', marginRight: '20px' }, 100);
-					inactive2.animate({ height: '8px', marginLeft: '10px', marginRight: '10px' }, 100);
-
-				} else if (currentItem.is(contentFirst)) {
-					currentItem.animate({ opacity: 0 }, 1000);
-					currentItem = nextItem.addClass('active');
-					$('.step').animate({ width: '66%' });
-					inactive2.animate({ height: '0', marginLeft: '0px', marginRight: '0px' }, 100);
-
-				} else {
-					currentItem = nextItem.addClass('active');
-					$('.step').animate({ width: '100%' });
-					inactive1.animate({ height: '0', marginLeft: '0px', marginRight: '0px' }, 100);
-				}
-			});
-
-		});
 		var io = io("https://webapp.mactus.com.br/");
-
-
 		function isMobile() {
 			if (navigator.userAgent.match(/Android/i)
 				|| navigator.userAgent.match(/webOS/i)
@@ -96,7 +57,11 @@
 		$(document).ready(function () {
 			$(".origin").html(window.location.origin);
 			if (isMobile()) {
+				if (navigator.userAgent.match(/iPhone/i)) {
+					$(".allow_scan").css("display", "none");
+				}
 				$("#smartphone").css("display", "block");
+
 				if (window.localStorage.getItem("INPUT_TOKEN_QR")) {
 					input_token = window.localStorage.getItem("INPUT_TOKEN_QR");
 					io.emit("action", input_token);
@@ -105,7 +70,7 @@
 					$(".btn_slides").css("display", "block");
 					$("#logout").css("display", "block");
 				}
-				//mostra formulario
+
 			} else {
 				token = generateHexString(5);
 				window.localStorage.setItem("TOKEN_SOCKET", token);
@@ -159,16 +124,6 @@
 			})
 
 		});
-/*		function animation() {
-			var element = document.getElementById("ball"),
-				time = Date.now();
-			element.style.left = (50 + Math.cos(time / 500) * 25) + "px";
-			element.style.top = (50 + Math.sin(time / 500) * 25) + "px";
-
-			setTimeout(animation, 1000 / 30);
-		}
-		animation();*/
-
 	</script>
 </head>
 
@@ -202,7 +157,7 @@
 								</a> -->
 							</ul>
 							<div class="page" id="p1">
-								<h1 style="padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 23px;color: #e97040;">&nbsp;&nbsp;&nbsp;RocketSlide</h1>
+								<h1 style="padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 20px;color: #e97040;">&nbsp;&nbsp;&nbsp;RocketSlide</h1>
 								<section style="width: 80%;height: 497px;top: 8%;" class="icon">
 									<!-- 1 -->
 									<div class="row">
@@ -210,11 +165,12 @@
 											<div class="btn-group">
 												<div style="background-color: #233f78;" class="fileUpload btn btn-primary">
 													<span>
-														<i class="glyphicon glyphicon-upload"></i> Selecione o arquivo PowerPoint</span>
+														<i class="glyphicon glyphicon-upload"></i> Selecione o arquivo PowerPoint 2010+</span>
 													<input id="uploadBtn" type="file" class="upload" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
 													/>
 													<input id="to-reveal-btn" type="hidden" />
 												</div>
+
 											</div>
 										</div>
 										<div class="col-md-offset-2">
@@ -284,32 +240,28 @@
 														</div>
 													</div>
 												</div>
-												<br>
-												<span>Requisitos: Microsoft Office 2010 ou posterior.
-													<br> Atenção: Grandes arquivos poderá ocorrer lentidão.</span>
+
+											</div>
+
+										</div>
+										<div class="col-lg-3">
+											<div style="color:black;font-size:16px;font-weight: bold;">
+												
 											</div>
 										</div>
-										<div class="col-lg-3"></div>
 									</div>
 								</section>
 							</div>
 							<div class="page" id="p2">
 								<section style="width: 80%;height: 497px;top: 8%;background-color: #415fc1b8;border-color: red;border: 1px solid black;box-shadow: 1px 1px 1px black;"
 								 class="icon">
-
-
 								</section>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
-
-
 
 		<div style="display:none;" class="row">
 			<div class="col-lg-12">
@@ -327,7 +279,6 @@
 		</div>
 	</div>
 
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/pptx2html.js"></script>
 
@@ -337,13 +288,6 @@
 	</div>
 	<div style="display: none;" id="smartphone">
 
-		<!--<div id="formulario_token" class="form-group">
-			<label>Informe o Token</label>
-			<input type="text" class="form-control" id="input_token" />
-			<button id="conectar" class="btn btn-primary block">
-				Conectar
-			</button>
-		</div> -->
 		<div id="formulario_token" class="col-sm-12" style="padding:20px;">
 			<label>Iniciar Sessão</label>
 			<div class="input-group">
@@ -354,11 +298,13 @@
 					</button>
 				</div>
 			</div>
-			<label style="padding-left:45%;">Ou</label>
+			<div class="allow_scan">
+				<label style="padding-left:45%;">Ou</label>
+				<button style="background-color:#233f78" class="btn-lg btn-primary btn-block" id="scan">
+					<span style="font-weight: bold;font-size: 25px;">Scannear Código</span>
+				</button>
+			</div>
 
-			<button style="background-color:#233f78" class="btn-lg btn-primary btn-block" id="scan">
-				<span style="font-weight: bold;font-size: 25px;">Scannear Código</span>
-			</button>
 		</div>
 
 		<button style="display:none;" class="btn-lg btn-block btn-danger" id="logout">Encerrar Sessão</button>
@@ -381,9 +327,8 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
-
-
 
 </body>
 

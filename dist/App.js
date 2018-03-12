@@ -8,8 +8,7 @@ const cors = require("cors");
 const fs = require("fs");
 const expressValidator = require("express-validator");
 const io_server = require("socket.io");
-const index_1 = require("./model/index");
-const index_2 = require("./middlewares/index");
+const index_1 = require("./middlewares/index");
 // Criando as configurações para o ExpressJS
 class App {
     constructor() {
@@ -43,7 +42,7 @@ class App {
         });
     }
     middleware() {
-        let customValidators = index_2.LOAD_MIDDLEWARES();
+        let customValidators = index_1.LOAD_MIDDLEWARES();
         this.express.use(expressValidator({ customValidators }));
     }
     routes() {
@@ -57,8 +56,8 @@ class App {
         });
     }
     database() {
-        const { sequelize } = index_1.LOAD_MODEL();
-        sequelize.sync({ force: false }).then(() => console.log("BASE DE DADOS INICIADA"));
+        /*const { sequelize } = LOAD_MODEL();
+        sequelize.sync({ force: false }).then(() => console.log("BASE DE DADOS INICIADA"));*/
     }
 }
 exports.default = new App();

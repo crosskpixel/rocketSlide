@@ -67,8 +67,8 @@ class App {
     }
 
     private database(): void {
-        const { sequelize } = LOAD_MODEL();
-        sequelize.sync({ force: false }).then(() => console.log("BASE DE DADOS INICIADA"));
+        /*const { sequelize } = LOAD_MODEL();
+        sequelize.sync({ force: false }).then(() => console.log("BASE DE DADOS INICIADA"));*/
     }
 }
 export default new App();

@@ -306,6 +306,15 @@ body {
   background: linear-gradient(0deg, #6a11cb 0%, #2575fc 100%);
   color: black;
 }
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}
 
 .container {
   margin: 4em auto;

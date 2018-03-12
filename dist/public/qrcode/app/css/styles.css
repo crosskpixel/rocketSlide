@@ -193,10 +193,10 @@ video {
   -webkit-transition: all 200ms linear;
   -moz-transition: all 200ms linear;
   transition: all 200ms linear;
-  -webkit-animation: scanner 3s infinite linear;
-  -moz-animation: scanner 3s infinite linear;
-  -o-animation: scanner 3s infinite linear;
-  animation: scanner 3s infinite linear;
+  -webkit-animation: scanner 2s infinite linear;
+  -moz-animation: scanner 2s infinite linear;
+  -o-animation: scanner 2s infinite linear;
+  animation: scanner 2s infinite linear;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.4);
   display: none;
 }
@@ -239,7 +239,7 @@ video {
   padding-left: 15px;
   padding-right: 10px;
   word-break: break-all;
-  -webkit-transition: opacity 3s cubic-bezier(0, 0, 0.30, 1) 0;
+  -webkit-transition: opacity 2s cubic-bezier(0, 0, 0.30, 1) 0;
   transition: opacity 0.30s cubic-bezier(0, 0, 0.30, 1) 0;
   text-transform: initial;
   margin-bottom: 10px;
@@ -323,13 +323,13 @@ video {
   bottom: 0;
   right: 0;
   left: 0;
-  border-color: #ffffff;
+  border-color: #ff6600;
   border-width: 2px;
   transition: all 200ms ease-in;
-  width: 360px;
-  height: 360px;
+  width: 250px;
+  height: 250px;
   margin: auto;
-  border-radius: 2px;
+  border-radius: 20px;
 }
 
 .app__help-text,

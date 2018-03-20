@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+/*import * as fs from 'fs';
 export const LOAD_MIDDLEWARES = () => {
     const VALIDATORS = {};
     //customValidators
@@ -12,4 +12,4 @@ export const LOAD_MIDDLEWARES = () => {
         Object.assign(VALIDATORS, customValidators || {});
     });
     return VALIDATORS;
-}
+}*/

@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("fs");
-exports.LOAD_MIDDLEWARES = () => {
+/*import * as fs from 'fs';
+export const LOAD_MIDDLEWARES = () => {
     const VALIDATORS = {};
     //customValidators
     fs.readdirSync("dist/middlewares").filter((file, key) => {
@@ -14,4 +12,4 @@ exports.LOAD_MIDDLEWARES = () => {
         Object.assign(VALIDATORS, customValidators || {});
     });
     return VALIDATORS;
-};
+}*/ 

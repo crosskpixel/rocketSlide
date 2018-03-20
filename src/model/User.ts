@@ -1,4 +1,4 @@
-export default (sequelize, Sequelize) => {
+/*export default (sequelize, Sequelize) => {
 	const User = sequelize.define("user", {
 		name: {
 			type: Sequelize.STRING,
@@ -37,4 +37,4 @@ export interface UserInterface {
 	password: string,
 	uuid:string,
 	email_auth:Number
-}
+}*/

@@ -14,11 +14,11 @@ class App {
     constructor() {
         this.io = io_server();
         this.express = express();
-        this.database();
+        //  this.database();
         this.config();
         this.sockets();
-        this.middleware();
-        this.routes();
+        //  this.middleware();
+        //  this.routes();
         this.express.io = this.io;
     }
     config() {
@@ -32,12 +32,12 @@ class App {
         this.express.use((req, res, next) => {
             req["session"] = {};
             req["ROOT_PATH"] = __dirname;
-            res.setHeader("Cache-Control", 'no-cache');
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-            res.setHeader("Access-Control-Allow-Headers", "*");
-            res.setHeader('Access-Control-Allow-Credentials', "false");
-            res.setHeader('Access-Control-Max-Age', '1728000');
+            // res.setHeader("Cache-Control", 'no-cache');
+            res.setHeader('Access-Control-Allow-Origin', 'https://webapp.desenvolvimento.cri.org');
+            // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            //  res.setHeader("Access-Control-Allow-Headers", "*");
+            // res.setHeader('Access-Control-Allow-Credentials', "false");
+            // res.setHeader('Access-Control-Max-Age', '1728000');
             next();
         });
     }

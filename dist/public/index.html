@@ -6,18 +6,30 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>RocketSlide</title>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+	<meta name="theme-color" content="#233f78">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="./css/font-awesome.min.css">
 	<link rel="stylesheet" href="./css/pptx2html.css">
 	<link rel="stylesheet" href="./css/custom.css" />
-	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script src="./js/jquery-3.3.1.js"></script>
+	<script src="./js/socket.io.slim.js"></script>
 	<script type="text/javascript" src="./js/FileSaver.min.js"></script>
 	<script type="text/javascript" src="./js/lz-string.min.js"></script>
 	<script type="text/javascript" src="./js/qrcode.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116062531-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-116062531-1');
+	</script>
+
 	<style>
 		.btn_slides {
 			display: none;
@@ -27,23 +39,31 @@
 		svg rect {
 			fill: #FF6700;
 		}
+		.banner {
+			margin-top: 16%;
+			height: 250px;
+			width: 350px;
+			background-color: black;
+		}
 	</style>
 	<script>
+		/*if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register("./sw.js")
+				.then((reg) => {
+					console.log(reg);
+				}).catch(err => console.log("<@@", err));
+		}*/
 		$(document).ready(function () {
-
 			var content = $('.content');
 			var currentItem = content.filter('.active');
 			var steps = $('.card').filter('.steps');
 			var inactive1 = $('.inactive-1');
 			var inactive2 = $('.inactive-2');
-
 			$('.button').click(function () {
 				var nextItem = currentItem.next();
 				var lastItem = content.last();
 				var contentFirst = content.first();
-
 				currentItem.removeClass('active');
-
 				if (currentItem.is(lastItem)) {
 					currentItem = contentFirst.addClass('active');
 					currentItem.css({ 'right': '10%', 'opacity': '1' });
@@ -63,7 +83,6 @@
 					inactive1.animate({ height: '0', marginLeft: '0px', marginRight: '0px' }, 100);
 				}
 			});
-
 		});
 		var io = io("https://webapp.mactus.com.br/");
 		function isMobile() {
@@ -125,15 +144,12 @@
 				});
 
 			}
-
 			$("#btn_next").click(function () {
 				io.emit("nextSlide", input_token);
 			});
-
 			$("#btn_previous").click(function () {
 				io.emit("previousSlide", input_token);
 			});
-
 			$("#conectar").click(function () {
 				input_token = $("#input_token").val();
 				//possivel retirada
@@ -144,21 +160,17 @@
 				$("#logout").css("display", "block");
 				//
 			});
-
 			$("#scan").click(function () {
 				window.location.href = "./qrcode/dist";
 			});
-
 			$("#logout").click(function () {
 				io.emit("close", input_token);
 				window.localStorage.clear();
 				window.location.reload();
 			});
-
 			$('#myModal').on('shown.bs.modal', function () {
 				$('#myInput').focus()
 			})
-
 		});
 	</script>
 </head>
@@ -224,7 +236,11 @@
 										<div class="col-md-offset-1"></div>
 									</div>
 									<div class="row">
-										<div class="col-lg-3"></div>
+										<div class="col-lg-3">
+											<div style="margin-left:17%;" class="banner">
+
+											</div>
+										</div>
 										<div class="col-lg-6">
 											<div style="display: none;" class="grupo_elementos">
 												<div class="progress">
@@ -244,6 +260,7 @@
 													</div>
 												</div>
 											</div>
+
 											<div class="requirimentos" style="font-size: 20px;color:#e97040;">
 												<div class="inner-container">
 													<div class="card inactive-1"></div>
@@ -275,11 +292,15 @@
 															<div class="step"></div>
 														</div>
 													</div>
-												</div> 
+												</div>
 											</div>
 										</div>
 										<div class="col-lg-3">
+											<div style="margin-left:-41%;" class="banner">
+												<div style="color:white">
 
+												</div>
+											</div>
 										</div>
 									</div>
 								</section>

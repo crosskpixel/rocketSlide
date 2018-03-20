@@ -1,4 +1,4 @@
-import * as express from 'express';
+/*import * as express from 'express';
 import { validateSchema } from "../utils/utils";
 import { UserInterface } from "../model/User";
 import { registrarUsuario } from "../controller/Usuario.controller";
@@ -76,4 +76,4 @@ const CHECK_REQUEST_REGISTER = {
             options: [{ min: 1, max: 30 }]
         }
     }
-}
+}*/

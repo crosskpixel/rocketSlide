@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (sequelize, Sequelize) => {
+/*export default (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
         name: {
             type: Sequelize.STRING,
@@ -30,4 +28,13 @@ exports.default = (sequelize, Sequelize) => {
         }
     });
     return User;
-};
+}
+
+export interface UserInterface {
+    name: string,
+    username: string,
+    email: string,
+    password: string,
+    uuid:string,
+    email_auth:Number
+}*/ 

@@ -1,4 +1,4 @@
-import { SECRET_KEY } from '../utils/SECRET_KEY';
+/*import { SECRET_KEY } from '../utils/SECRET_KEY';
 import { LOAD_MODEL } from './../model/index';
 import * as crypto from 'crypto';
 import * as jwt from "jsonwebtoken";
@@ -56,4 +56,4 @@ export const authJWT = (req, res, next) => {
             }
         })
     }
-}
+}*/

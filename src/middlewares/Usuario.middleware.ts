@@ -1,4 +1,4 @@
-import { LOAD_MODEL } from "../model/index";
+/*import { LOAD_MODEL } from "../model/index";
 const { user } = LOAD_MODEL();
 
 export const validaCNPJ = (cnpj: string = "") => {
@@ -104,4 +104,4 @@ export const availableEmail = (_email) => {
             }
         }).catch(err => reject(err));
     });
-}
+}*/

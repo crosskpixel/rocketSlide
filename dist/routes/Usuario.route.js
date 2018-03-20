@@ -1,32 +1,39 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("../utils/utils");
-const Usuario_controller_1 = require("../controller/Usuario.controller");
-const JWT_1 = require("../middlewares/JWT");
-const index_1 = require("./../model/index");
-const db = index_1.LOAD_MODEL();
-module.exports = (app) => {
-    app.post("/registro", utils_1.validateSchema(CHECK_REQUEST_REGISTER), (req, res) => {
-        let { name, username, email, password } = req.body;
-        let usuario = { name, username, email, password, email_auth: 1, uuid: null };
-        Usuario_controller_1.registrarUsuario(usuario).then(result => res.json(result))
+/*import * as express from 'express';
+import { validateSchema } from "../utils/utils";
+import { UserInterface } from "../model/User";
+import { registrarUsuario } from "../controller/Usuario.controller";
+import { login, authJWT } from "../middlewares/JWT";
+import { LOAD_MODEL } from './../model/index';
+import { verifyTokenFirebase } from "./../firebase/index";
+const db = LOAD_MODEL();
+
+module.exports = (app: express.Application) => {
+
+    app.post("/registro", validateSchema(CHECK_REQUEST_REGISTER), (req: express.Request, res: express.Response) => {
+        let { name, username, email, password }: UserInterface = req.body;
+        let usuario: UserInterface = { name, username, email, password, email_auth: 1, uuid: null };
+        registrarUsuario(usuario).then(result => res.json(result))
             .catch(err => res.status(err.code).json({ msg: err.msg }));
     });
-    app.post("/login", (req, res) => {
+
+    app.post("/login", (req: express.Request, res: express.Response) => {
         let { username, password } = req.body;
-        JWT_1.login(username, password).then(token => res.json({ token: token })).catch(err => res.status(err.code).json({ msg: err.msg }));
+        login(username, password).then(token => res.json({ token: token })).catch(err => res.status(err.code).json({ msg: err.msg }));
     });
-    app.post("/auth", JWT_1.authJWT, (req, res) => {
+
+    app.post("/auth", authJWT, (req: express.Request, res: express.Response) => {
         console.log(req['session'].id);
         res.send({ msg: "Usuario Autenticado" });
     });
-    app.post("/authFirebase", JWT_1.authJWT, (req, res) => {
+    app.post("/authFirebase", authJWT, (req: express.Request, res: express.Response) => {
         res.send("AUTENTICADO COM SUCESSO BROW");
     });
+
     app.get("/socket", (req, res) => {
         app['io'].emit("socket", "Funcionando perfeitamente");
     });
-};
+
+}
 const CHECK_REQUEST_LOGIN = {
     username: {
         in: "body",
@@ -42,7 +49,7 @@ const CHECK_REQUEST_LOGIN = {
         },
         errorMessage: "Informe um usuario e senha"
     }
-};
+}
 const CHECK_REQUEST_REGISTER = {
     name: {
         in: "body",
@@ -69,4 +76,4 @@ const CHECK_REQUEST_REGISTER = {
             options: [{ min: 1, max: 30 }]
         }
     }
-};
+}*/ 

@@ -84,7 +84,7 @@
 				}
 			});
 		});
-		var io = io("https://webapp.mactus.com.br/");
+		var io = io(window.location.origin);
 		function isMobile() {
 			if (navigator.userAgent.match(/Android/i)
 				|| navigator.userAgent.match(/webOS/i)

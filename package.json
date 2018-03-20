@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production && nodemon dist/Init.js",
+    "start": "set NODE_ENV=production && node dist/Init.js",
     "test": "set NODE_ENV=test && nodemon dist/Init.js",
     "dev": "set NODE_ENV=dev && nodemon dist/Init.js"
   },

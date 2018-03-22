@@ -6,13 +6,20 @@ class Init {
     }
 
     defineEnviroment(): void {
-        if (process.env.NODE_ENV.trim() === "dev") {
-            this.RunOneThread();
-        } else if (process.env.NODE_ENV.trim() === "test") {
-            this.RunAllThreads();
-        } else if (process.env.NODE_ENV.trim() === "production") {
-            this.RunAllThreads();
+        try {
+            if (process.env.NODE_ENV.trim() === "dev") {
+                this.RunOneThread();
+            } else if (process.env.NODE_ENV.trim() === "test") {
+                this.RunAllThreads();
+            } else if (process.env.NODE_ENV.trim() === "production") {
+                this.RunAllThreads();
+            } else if (process.env.NODE_ENV.trim() === "umbler") {
+                this.RunOneThread();
+            }
+        }catch(err){
+            console.log("DEFINA A VARIAVEL DE AMBIENTE");
         }
+        
     }
 
     private RunAllThreads() {

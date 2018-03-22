@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="./css/font-awesome.min.css">
 	<link rel="stylesheet" href="./css/pptx2html.css">
 	<link rel="stylesheet" href="./css/custom.css" />
+	<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
 	<script src="./js/jquery-3.3.1.js"></script>
 	<script src="./js/socket.io.slim.js"></script>
 	<script type="text/javascript" src="./js/FileSaver.min.js"></script>
@@ -21,14 +22,14 @@
 	<script type="text/javascript" src="./js/qrcode.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116062531-1"></script>
+	<!--	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116062531-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'UA-116062531-1');
-	</script>
+	</script> -->
 
 	<style>
 		.btn_slides {
@@ -39,6 +40,7 @@
 		svg rect {
 			fill: #FF6700;
 		}
+
 		.banner {
 			margin-top: 16%;
 			height: 250px;
@@ -115,6 +117,8 @@
 				if (navigator.userAgent.match(/iPhone/i)) {
 					$(".allow_scan").css("display", "none");
 				}
+
+				$("body").css("background-color", "#391aa2");
 				$("#smartphone").css("display", "block");
 
 				if (window.localStorage.getItem("INPUT_TOKEN_QR")) {
@@ -125,9 +129,8 @@
 					$(".btn_slides").css("display", "block");
 					$("#logout").css("display", "block");
 				}
-
 			} else {
-				token = generateHexString(5);
+				token = generateHexString(6);
 				window.localStorage.setItem("TOKEN_SOCKET", token);
 				$("#desktop").css("display", "block");
 				$("#token").html(token);
@@ -182,31 +185,13 @@
 				<div class="ct" id="t3">
 					<div class="ct" id="t4">
 						<div class="ct" id="t5">
-							<ul id="menu">
-
-								<br>
-								<br>
-								<br>
-								<br>
-								<a href="#t1">
-									<li class="icon fa fa-rocket" id="uno"></li>
-								</a>
-								<!--<a href="#t2">
-									<li class="icon fa fa-dribbble" id="dos"></li>
-								</a>
-								<a href="#t3">
-									<li class="icon fa fa-rocket" id="tres"></li>
-								</a>
-								<a href="#t4">
-									<li class="icon fa fa-dribbble" id="cuatro"></li>
-								</a>
-								<a href="#t5">
-									<li class="icon fa fa-plus-circle" id="cinco"></li>
-								</a> -->
-							</ul>
 							<div class="page" id="p1">
-								<h1 style="padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 20px;color: #e97040;">&nbsp;&nbsp;&nbsp;RocketSlide</h1>
-								<section style="width: 80%;height: 497px;top: 8%;" class="icon">
+								<div style="top: -10px;position: relative;">
+									<h1 style="font-family: 'Fredoka One', cursive;padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 5px;color:rgb(243, 84, 44);">
+										<img src="./img/icon-62x62.png" /> &nbsp;RocketSlide
+									</h1>
+								</div>
+								<section style="width: 80%;height: 497px;top: 8%;background-color:aliceblue;margin-left: 3%;margin-right: 0%;" class="icon">
 									<!-- 1 -->
 									<div class="row">
 										<div class="col-md-6 col-md-offset-3" style="text-align: center;">
@@ -261,7 +246,7 @@
 												</div>
 											</div>
 
-											<div class="requirimentos" style="font-size: 20px;color:#e97040;">
+											<div class="requirimentos" style="font-size: 20px;color:#070201;">
 												<div class="inner-container">
 													<div class="card inactive-1"></div>
 													<div class="card inactive-2"></div>
@@ -342,7 +327,7 @@
 	<div style="display: none;" id="smartphone">
 
 		<div id="formulario_token" class="col-sm-12" style="padding:20px;">
-			<label>Iniciar Sessão</label>
+			<label style="color:white;">Iniciar Sessão</label>
 			<div class="input-group">
 				<input placeholder="Digite o código de sessão" type="text" id="input_token" class="form-control" />
 				<div class="input-group-btn">
@@ -362,19 +347,19 @@
 
 		<button style="display:none;" class="btn-lg btn-block btn-danger" id="logout">Encerrar Sessão</button>
 		<div style="position:relative;padding-top: 20px;">
-			<h1 style="font-family: monospace;letter-spacing: 5px;color: #e97040;font-size:28px;">&nbsp;&nbsp;&nbsp;RocketSlide</h1>
+			<h1 style="font-family: 'Fredoka One', cursive;color:rgb(243, 84, 44);letter-spacing: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RocketSlide</h1>
 		</div>
 
 
 		<div class="btn_slides">
-			<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color: rgb(89, 19, 164);" class="row">
+			<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color:transparent;padding-bottom: 20px;padding-left: 11px;" class="row">
 				<div class="col-xs-6" style="margin:0;padding: 0;">
-					<div id="btn_previous" style="background-color: #233f78;border:1px solid rgb(105, 21, 248);width:100%;height: 180px;padding: 50px;text-align: center;">
+					<div id="btn_previous" style="border-radius: 100%;background-color: #233f78;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;padding: 50px;text-align: center;margin-left: 19px;">
 						<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>
 					</div>
 				</div>
 				<div class="col-xs-6" style="margin:0;padding: 0;">
-					<div id="btn_next" style="background-color: #233f78;border:1px solid rgb(77, 24, 250);width:100%;height: 180px;padding: 50px;text-align: center;">
+					<div id="btn_next" style="border-radius: 100%;background-color: #233f78;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;padding: 50px;text-align: center;">
 						<i style="color:white;font-size:68px;" class="fa fa-fast-forward" aria-hidden="true"></i>
 					</div>
 				</div>

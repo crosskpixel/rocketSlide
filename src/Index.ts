@@ -4,9 +4,9 @@ import * as fs from 'fs';
 import App from './App';
 //import * as io_server from "socket.io";
 
-var init = () => {
+const init = () => {
     debug('ts-express:server');
-    const port = normalizePort(process.env.PORT || 3000);
+    const port = normalizePort(process.env.PORT || 80);
     App.express.set('port', port);
     const server = http.createServer(App.express);
     App.io.attach(server);

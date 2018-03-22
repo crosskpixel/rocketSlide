@@ -20,11 +20,11 @@ class App {
     constructor() {
         this.io = io_server();
         this.express = express();
-      //  this.database();
+        //  this.database();
         this.config();
         this.sockets();
-      //  this.middleware();
-      //  this.routes();
+        //  this.middleware();
+        //  this.routes();
         this.express.io = this.io;
     }
 
@@ -33,18 +33,18 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: true }));
         this.express.use(cors({ origin: "*", allowedHeaders: ["Content-Type", "Authorization"] }));
-        this.express.use(logger('dev'));
+        (process.env.NODE_ENV.trim() == "umbler" ? "Servidor iniciado na UMBLER.NET" : this.express.use(logger('dev')));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
         this.express.use((req, res, next) => {
             req["session"] = {};
             req["ROOT_PATH"] = __dirname;
-           // res.setHeader("Cache-Control", 'no-cache');
-            res.setHeader('Access-Control-Allow-Origin', 'https://webapp.desenvolvimento.cri.org');
+            // res.setHeader("Cache-Control", 'no-cache');
+            res.setHeader('Access-Control-Allow-Origin', '*');
             // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
             //  res.setHeader("Access-Control-Allow-Headers", "*");
-           // res.setHeader('Access-Control-Allow-Credentials', "false");
-           // res.setHeader('Access-Control-Max-Age', '1728000');
+            // res.setHeader('Access-Control-Allow-Credentials', "false");
+            // res.setHeader('Access-Control-Max-Age', '1728000');
             next();
         });
     }

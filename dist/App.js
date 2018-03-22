@@ -26,7 +26,7 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: true }));
         this.express.use(cors({ origin: "*", allowedHeaders: ["Content-Type", "Authorization"] }));
-        this.express.use(logger('dev'));
+        (process.env.NODE_ENV.trim() == "umbler" ? "Servidor iniciado na UMBLER.NET" : this.express.use(logger('dev')));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
         this.express.use((req, res, next) => {

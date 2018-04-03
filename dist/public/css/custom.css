@@ -27,11 +27,7 @@
     left: 200%;
   }
   
-<<<<<<< HEAD
   #p1 { background: #050409d1; }
-=======
-  #p1 { background: #242062; }
->>>>>>> b1f8ceb97c7f2c57d85e072066620879bb4ebd9a
   
   #t2:target #p2,
   #t3:target #p3,
@@ -277,11 +273,7 @@ body {
   box-shadow: 0 11px 14px 4px rgba(0, 0, 0, 0.35)
 }
 .card:first-child, .card:nth-child(2) {
-<<<<<<< HEAD
   background: #050409d1;
-=======
-  background: #2a2acc8b;
->>>>>>> b1f8ceb97c7f2c57d85e072066620879bb4ebd9a
   height: 8px;
   border-radius: 5px 5px 0 0;
   padding: 0;
@@ -289,11 +281,7 @@ body {
 }
 .card:first-child {
   margin: 0 20px;
-<<<<<<< HEAD
   background: #0504097a;
-=======
-  background: #2a2acccb;
->>>>>>> b1f8ceb97c7f2c57d85e072066620879bb4ebd9a
 }
 .card:nth-child(2) {
   margin: 0 10px;

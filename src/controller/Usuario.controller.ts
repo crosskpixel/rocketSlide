@@ -1,4 +1,4 @@
-import { UserInterface } from "../model/User";
+/*import { UserInterface } from "../model/User";
 import { LOAD_MODEL } from "../model/index";
 import { availableEmail } from '../middlewares/Usuario.middleware';
 import * as crypto from "crypto";
@@ -15,4 +15,4 @@ export const registrarUsuario = (usuario: UserInterface) => {
                 .catch(err => reject({ code: 500, msg: "Erro ao gravar registro no banco de dados" }));
         }).catch(err => reject(err));
     });
-}
+}*/

@@ -39,8 +39,13 @@ class App {
         this.express.use((req, res, next) => {
             req["session"] = {};
             req["ROOT_PATH"] = __dirname;
+<<<<<<< HEAD
             // res.setHeader("Cache-Control", 'no-cache');
             res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN.trim());
+=======
+           // res.setHeader("Cache-Control", 'no-cache');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+>>>>>>> b1f8ceb97c7f2c57d85e072066620879bb4ebd9a
             // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
             //  res.setHeader("Access-Control-Allow-Headers", "*");
             // res.setHeader('Access-Control-Allow-Credentials', "false");

@@ -139,6 +139,7 @@
 					$("#scan").css("display", "none");
 					$(".btn_slides").css("display", "block");
 					$("#logout").css("display", "block");
+					$(".remover").css("display", "none");
 				}
 
 
@@ -183,6 +184,7 @@
 				$("#scan").css("display", "none");
 				$(".btn_slides").css("display", "block");
 				$("#logout").css("display", "block");
+				$(".remover").css("display", "none");
 			});
 			$("#scan").click(function () {
 				window.location.href = "./qrcode/dist";
@@ -209,8 +211,6 @@
 									</h1>
 								</div>
 								<section style="width: 80%;height: 497px;top: 8%;background-color:aliceblue;margin-left: 3%;margin-right: 0%;" class="icon">
-									<!-- 1 -->
-
 
 									<div class="row">
 
@@ -368,7 +368,7 @@
 	</div>
 	<div style="display: none;" id="smartphone">
 
-		<div id="formulario_token" class="col-sm-12" style="padding:20px;">
+		<div id="formulario_token" class="col-sm-12" style="padding:10px 25px 0px;">
 			<label style="color:white;">Iniciar Sessão</label>
 			<div class="input-group">
 				<input placeholder="Digite o código de sessão" type="text" id="input_token" class="form-control" />
@@ -388,22 +388,26 @@
 		</div>
 
 		<button style="display:none;" class="btn-lg btn-block btn-danger" id="logout">Encerrar Sessão</button>
-		<div style="display: flex;flex-direction: column; align-items: center;">
+		<div style="display: flex;flex-direction: column; align-items: center;margin-top: 5%;">
 			<div style="flex:2;">
 				<h1 style="color:white;letter-spacing: 5px;">RocketSlide</h1>
 			</div>
 			<div style="flex:2;margin-top: 10px;">
 				<img src="img/icon-62x62.png" width="62" />
 			</div>
-			<div style="flex:3;margin-top: 2%;">
-				<div style="color:#969696;font-size: 15px;text-align: justify;">
-					<p> 1º Acesse RocketSlide em seu computador</p>
-					<p>2º Selecione o Arquivo</p>
-					<p>3ª Scannei-e o QRCode ou insira o codigo</p>
-					<p style="text-align: center;">Apresente seu Slide 😃 </p>
+
+			<div class="remover">
+				<div style="flex:3;margin-top: 2%;">
+					<div style="color:#969696;font-size: 15px;text-align: justify;">
+						<p> 1º Acesse RocketSlide em seu computador</p>
+						<p>2º Selecione o Arquivo</p>
+						<p>3ª Scannei-e o QRCode ou insira o codigo</p>
+						<p style="text-align: center;">Apresente seu Slide 😃 </p>
+					</div>
 				</div>
 			</div>
-			
+
+
 			<div style="flex:1;margin-top: 10%;">
 				<div class="fb-share-button" data-href="https://www.rocketslide.com.br" data-layout="button_count" data-size="large" data-mobile-iframe="true">
 					<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.rocketslide.com.br%2F&amp;src=sdkpreparse"
@@ -421,19 +425,24 @@
 
 
 		<div class="btn_slides">
-			<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color:transparent;padding-bottom: 20px;padding-left: 11px;"
-			 class="row">
-				<div class="col-xs-6" style="margin:0;padding: 0;">
-					<div id="btn_previous" style="border-radius: 100%;background-color: #233f78;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;padding: 50px;text-align: center;margin-left: 19px;">
-						<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>
+			<div style="display: flex;flex-direction: row;margin-top:45%;">
+				<div style="flex:1">
+					<div>
+						<div id="btn_previous" style="border-radius: 3%;background-color: black;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;text-align: center;padding: 45px 0;margin-left: 9%;">
+							<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>
+						</div>
 					</div>
 				</div>
-				<div class="col-xs-6" style="margin:0;padding: 0;">
-					<div id="btn_next" style="border-radius: 100%;background-color: #233f78;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;padding: 50px;text-align: center;">
-						<i style="color:white;font-size:68px;" class="fa fa-fast-forward" aria-hidden="true"></i>
+				<div style="flex:1">
+					<div >
+						<div id="btn_next" style="border-radius: 3%;background-color: black;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;text-align: center;padding:45px 0;">
+							<i style="color:white;font-size:68px;" class="fa fa-fast-forward" aria-hidden="true"></i>
+						</div>
 					</div>
 				</div>
+
 			</div>
+
 		</div>
 
 	</div>

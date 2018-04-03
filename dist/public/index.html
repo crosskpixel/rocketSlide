@@ -11,7 +11,9 @@
 	<meta property="og:title" content="RocketSlide" />
 	<meta property="og:description" content="Controle suas apresentações acâdemicas com seu SmartPhone instantaneamente." />
 	<meta property="og:image" content="https://www.rocketslide.com.br/img/icon-62x62.png" />
-	<meta name="theme-color" content="#233f78">
+	<meta name="description" content="Apresente seus trabalhos acâdemicos com seu smartphone Agora Mesmo..">
+	<meta name="keywords" content="slide,rocketslide,controle,remoto,controleremoto,slideremoto,apresentacao,integrado,academicos,faculdade,direito,médicina,palestra,qrcode,nodejs">
+	<meta name="theme-color" content="#000">
 	<link rel="manifest" href="/manifest.json">
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -155,7 +157,6 @@
 				io.on(token, function (data) {
 					switch (data.action) {
 						case "OPEN_VIEW":
-							alert("abrindo");
 							$("#carregando").css("display", "block");
 							setInterval(() => $("#to-reveal-btn").click(), 1000);
 							break;
@@ -425,7 +426,7 @@
 
 
 		<div class="btn_slides">
-			<div style="display: flex;flex-direction: row;margin-top:45%;">
+			<div style="display: flex;flex-direction: row;margin-top:40%;">
 				<div style="flex:1">
 					<div>
 						<div id="btn_previous" style="border-radius: 3%;background-color: black;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;text-align: center;padding: 45px 0;margin-left: 9%;">

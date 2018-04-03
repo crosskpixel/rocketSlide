@@ -6,6 +6,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>RocketSlide</title>
+	<meta property="og:url" content="https://www.rocketslide.com.br" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="RocketSlide" />
+	<meta property="og:description" content="Controle suas apresentações acâdemicas com seu SmartPhone instantaneamente." />
+	<meta property="og:image" content="https://www.rocketslide.com.br/img/icon-62x62.png" />
 	<meta name="theme-color" content="#233f78">
 	<link rel="manifest" href="/manifest.json">
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -21,15 +26,21 @@
 	<script type="text/javascript" src="./js/lz-string.min.js"></script>
 	<script type="text/javascript" src="./js/qrcode.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<!--	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116062531-1"></script>
+	<script>(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.12&appId=1921484631195037&autoLogAppEvents=1';
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116062531-1"></script>
+
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
-
 		gtag('config', 'UA-116062531-1');
-	</script> -->
+	</script>
 
 	<style>
 		.btn_slides {
@@ -86,7 +97,7 @@
 				}
 			});
 		});
-		var io = io("https://webapp.mactus.com.br/");
+		var io = io(window.location.origin);
 		function isMobile() {
 			if (navigator.userAgent.match(/Android/i)
 				|| navigator.userAgent.match(/webOS/i)
@@ -118,7 +129,7 @@
 					$(".allow_scan").css("display", "none");
 				}
 
-				$("body").css("background-color", "#391aa2");
+				$("body").css("background-color", "#050409d1");
 				$("#smartphone").css("display", "block");
 
 				if (window.localStorage.getItem("INPUT_TOKEN_QR")) {
@@ -129,6 +140,9 @@
 					$(".btn_slides").css("display", "block");
 					$("#logout").css("display", "block");
 				}
+
+
+
 			} else {
 				token = generateHexString(6);
 				window.localStorage.setItem("TOKEN_SOCKET", token);
@@ -140,32 +154,14 @@
 				io.on(token, function (data) {
 					switch (data.action) {
 						case "OPEN_VIEW":
+							alert("abrindo");
 							$("#carregando").css("display", "block");
 							setInterval(() => $("#to-reveal-btn").click(), 1000);
 							break;
 					}
 				});
-
 			}
-			$("#btn_next").click(function () {
-				io.emit("nextSlide", input_token);
-			});
-			$("#btn_previous").click(function () {
-				io.emit("previousSlide", input_token);
-			});
-			$("#conectar").click(function () {
-				input_token = $("#input_token").val();
-				//possivel retirada
-				io.emit("action", input_token);
-				$("#formulario_token").css("display", "none");
-				$("#scan").css("display", "none");
-				$(".btn_slides").css("display", "block");
-				$("#logout").css("display", "block");
-				//
-			});
-			$("#scan").click(function () {
-				window.location.href = "./qrcode/dist";
-			});
+
 			$("#logout").click(function () {
 				io.emit("close", input_token);
 				window.localStorage.clear();
@@ -174,59 +170,89 @@
 			$('#myModal').on('shown.bs.modal', function () {
 				$('#myInput').focus()
 			})
+			$("#btn_next").click(function () {
+				io.emit("nextSlide", input_token);
+			});
+			$("#btn_previous").click(function () {
+				io.emit("previousSlide", input_token);
+			});
+			$("#conectar").click(function () {
+				input_token = $("#input_token").val();
+				io.emit("action", input_token);
+				$("#formulario_token").css("display", "none");
+				$("#scan").css("display", "none");
+				$(".btn_slides").css("display", "block");
+				$("#logout").css("display", "block");
+			});
+			$("#scan").click(function () {
+				window.location.href = "./qrcode/dist";
+			});
 		});
+
 	</script>
 </head>
 
 <body>
+	<div id="fb-root"></div>
+
 	<div style="display:none;" id="desktop">
+
 		<div class="ct" id="t1">
 			<div class="ct" id="t2">
 				<div class="ct" id="t3">
 					<div class="ct" id="t4">
 						<div class="ct" id="t5">
 							<div class="page" id="p1">
-								<div style="top: -10px;position: relative;">
-									<h1 style="font-family: 'Fredoka One', cursive;padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 5px;color:rgb(243, 84, 44);">
+								<div style="position: relative;margin-top: 1%;">
+									<h1 style="font-family: 'Fredoka One', cursive;padding-top:20px;text-align: center;font-family: monospace;letter-spacing: 5px;color:white;">
 										<img src="./img/icon-62x62.png" /> &nbsp;RocketSlide
 									</h1>
 								</div>
 								<section style="width: 80%;height: 497px;top: 8%;background-color:aliceblue;margin-left: 3%;margin-right: 0%;" class="icon">
 									<!-- 1 -->
+
+
 									<div class="row">
-										<div class="col-md-6 col-md-offset-3" style="text-align: center;">
-											<div class="btn-group">
-												<div style="background-color: #233f78;" class="fileUpload btn btn-primary">
+
+										<div style="display: flex;flex-direction: row;margin-top: 3%;margin-bottom: 2%;">
+											<div style="flex:2;">
+
+											</div>
+											<div style="flex:1;">
+												<div style="background-color: #050409d1;" class="fileUpload btn btn-primary">
 													<span>
 														<i class="glyphicon glyphicon-upload"></i> Selecione o arquivo PowerPoint 2010+</span>
 													<input id="uploadBtn" type="file" class="upload" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
 													/>
 													<input id="to-reveal-btn" type="hidden" />
 												</div>
+											</div>
+											<div style="flex:2;">
 
+												<div id="carregando" style="display: none;">
+													<span style="color:#e97040;font-size:25px;bottom:10px;position: relative;">Carrregando</span>
+													<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+													 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+														<path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+															<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"
+															/>
+														</path>
+													</svg>
+												</div>
 											</div>
 										</div>
-										<div class="col-md-offset-2">
-											<div id="carregando" style="display: none;">
-												<span style="color:#e97040;font-size:25px;bottom:10px;position: relative;">Carrregando</span>
-												<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-												 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-													<path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
-														<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"
-														/>
-													</path>
-												</svg>
-											</div>
-										</div>
-										<div class="col-md-offset-1"></div>
+
+
 									</div>
-									<div class="row">
-										<div class="col-lg-3">
-											<div style="margin-left:17%;" class="banner">
+
+									<div style="display: flex;flex-direction: row;">
+										<div style="flex:5;">
+											<div class="propaganda">
 
 											</div>
 										</div>
-										<div class="col-lg-6">
+
+										<div style="flex:3;">
 											<div style="display: none;" class="grupo_elementos">
 												<div class="progress">
 													<div style="color:black;" id="load-progress" class="progress-bar progress-bar-striped" style="transition: none;" role="progressbar"
@@ -245,7 +271,6 @@
 													</div>
 												</div>
 											</div>
-
 											<div class="requirimentos" style="font-size: 20px;color:#070201;">
 												<div class="inner-container">
 													<div class="card inactive-1"></div>
@@ -279,15 +304,16 @@
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-lg-3">
-											<div style="margin-left:-41%;" class="banner">
-												<div style="color:white">
 
-												</div>
+										</div>
+										<div style="flex:5;">
+											<div class="propaganda">
+
 											</div>
 										</div>
 									</div>
+
+
 								</section>
 							</div>
 							<div class="page" id="p2">
@@ -315,6 +341,22 @@
 				</div>
 			</div>
 		</div>
+
+
+		<footer style="position: fixed;bottom: 11px;text-align: center;width: 100%;">
+			<div class="fb-share-button" data-href="https://www.rocketslide.com.br" data-layout="button_count" data-size="large" data-mobile-iframe="true">
+				<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.rocketslide.com.br%2F&amp;src=sdkpreparse"
+				 class="fb-xfbml-parse-ignore">Compartilhar
+				</a>
+
+
+			</div>
+			<a class="removeBefore" href="https://api.whatsapp.com/send?text=Faça apresentações%20acâdemicas%20instantaneas%20via%20Internet%20com%20https%3A%2F%2Frocketslide.com.br 📚">
+				<img src="./img/icon_whatsapp.svg" width="20" />
+				<span style="font-size: 16px;">Compartilhar no WhatsApp</span>
+			</a>
+		</footer>
+
 	</div>
 
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -331,14 +373,14 @@
 			<div class="input-group">
 				<input placeholder="Digite o código de sessão" type="text" id="input_token" class="form-control" />
 				<div class="input-group-btn">
-					<button style="background-color:#233f78" id="conectar" class="btn btn-primary">
+					<button style="background-color:#000000;border-color: white;" id="conectar" class="btn btn-primary">
 						<span style="font-weight: bold;font-size: 15px;">Conectar</span>
 					</button>
 				</div>
 			</div>
 			<div class="allow_scan">
 				<label style="padding-left:45%;">Ou</label>
-				<button style="background-color:#233f78" class="btn-lg btn-primary btn-block" id="scan">
+				<button style="background-color:#000000;border-color: white;" class="btn-lg btn-primary btn-block" id="scan">
 					<span style="font-weight: bold;font-size: 25px;">Scannear Código</span>
 				</button>
 			</div>
@@ -346,13 +388,41 @@
 		</div>
 
 		<button style="display:none;" class="btn-lg btn-block btn-danger" id="logout">Encerrar Sessão</button>
-		<div style="position:relative;padding-top: 20px;">
-			<h1 style="font-family: 'Fredoka One', cursive;color:rgb(243, 84, 44);letter-spacing: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RocketSlide</h1>
+		<div style="display: flex;flex-direction: column; align-items: center;">
+			<div style="flex:2;">
+				<h1 style="color:white;letter-spacing: 5px;">RocketSlide</h1>
+			</div>
+			<div style="flex:2;margin-top: 10px;">
+				<img src="img/icon-62x62.png" width="62" />
+			</div>
+			<div style="flex:3;margin-top: 2%;">
+				<div style="color:#969696;font-size: 15px;text-align: justify;">
+					<p> 1º Acesse RocketSlide em seu computador</p>
+					<p>2º Selecione o Arquivo</p>
+					<p>3ª Scannei-e o QRCode ou insira o codigo</p>
+					<p style="text-align: center;">Apresente seu Slide 😃 </p>
+				</div>
+			</div>
+			
+			<div style="flex:1;margin-top: 10%;">
+				<div class="fb-share-button" data-href="https://www.rocketslide.com.br" data-layout="button_count" data-size="large" data-mobile-iframe="true">
+					<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.rocketslide.com.br%2F&amp;src=sdkpreparse"
+					 class="fb-xfbml-parse-ignore">Compartilhar
+					</a>
+				</div>
+			</div>
+			<div style="flex:1;">
+				<a class="removeBefore" href="https://api.whatsapp.com/send?text=Faça apresentações%20acâdemicas%20instantaneas%20via%20Internet%20com%20https%3A%2F%2Frocketslide.com.br 📚">
+					<img src="./img/icon_whatsapp.svg" width="20" />
+					<span style="font-size: 16px;">Compartilhar no WhatsApp</span>
+				</a>
+			</div>
 		</div>
 
 
 		<div class="btn_slides">
-			<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color:transparent;padding-bottom: 20px;padding-left: 11px;" class="row">
+			<div style="position: fixed;left: 0;bottom: 0;width: 105%;background-color:transparent;padding-bottom: 20px;padding-left: 11px;"
+			 class="row">
 				<div class="col-xs-6" style="margin:0;padding: 0;">
 					<div id="btn_previous" style="border-radius: 100%;background-color: #233f78;border: 1px solid rgb(0, 0, 0);width: 90%;height: 165px;padding: 50px;text-align: center;margin-left: 19px;">
 						<i style="color:white;font-size:68px;" class="fa fa-fast-backward" aria-hidden="true"></i>

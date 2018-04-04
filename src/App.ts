@@ -29,7 +29,6 @@ class App {
     }
 
     private config(): void {
-        this.express.use(express.static(path.join(__dirname, "public")));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: true }));
         this.express.use(cors({ origin: process.env.DOMAIN.trim(), allowedHeaders: ["Content-Type", "Authorization"] }));
@@ -40,13 +39,18 @@ class App {
             req["session"] = {};
             req["ROOT_PATH"] = __dirname;
             // res.setHeader("Cache-Control", 'no-cache');
-            res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN.trim());
+            res.setHeader('Access-Control-Allow-Origin', "*");
             // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
             //  res.setHeader("Access-Control-Allow-Headers", "*");
             // res.setHeader('Access-Control-Allow-Credentials', "false");
             // res.setHeader('Access-Control-Max-Age', '1728000');
-            next();
+            if (req.headers['x-forwarded-proto'] != 'https') {
+                res.redirect("https://" + req.headers.host + req.url);
+            } else {
+                next();
+            }
         });
+        this.express.use(express.static(path.join(__dirname, "public")));
     }
 
     private middleware(): void {

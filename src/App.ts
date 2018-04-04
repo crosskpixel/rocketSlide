@@ -29,7 +29,6 @@ class App {
     }
 
     private config(): void {
-        this.express.use(express.static(path.join(__dirname, "public")));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: true }));
         this.express.use(cors({ origin: process.env.DOMAIN.trim() || '*', allowedHeaders: ["Content-Type", "Authorization"] }));
@@ -45,8 +44,13 @@ class App {
             //  res.setHeader("Access-Control-Allow-Headers", "*");
             // res.setHeader('Access-Control-Allow-Credentials', "false");
             // res.setHeader('Access-Control-Max-Age', '1728000');
-            next();
+            if (req.headers['x-forwarded-proto'] != 'https') {
+                res.redirect("https://" + req.headers.host + req.url);
+            } else {
+                next();
+            }
         });
+        this.express.use(express.static(path.join(__dirname, "public")));
     }
 
     private middleware(): void {

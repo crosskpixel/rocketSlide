@@ -11,7 +11,7 @@ class Init {
                 this.RunOneThread();
             }
             else if (process.env.NODE_ENV.trim() === "test") {
-                this.RunAllThreads();
+                this.RunOneThread();
             }
             else if (process.env.NODE_ENV.trim() === "production") {
                 this.RunAllThreads();

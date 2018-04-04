@@ -10,7 +10,7 @@ class Init {
             if (process.env.NODE_ENV.trim() === "dev") {
                 this.RunOneThread();
             } else if (process.env.NODE_ENV.trim() === "test") {
-                this.RunAllThreads();
+                this.RunOneThread();
             } else if (process.env.NODE_ENV.trim() === "production") {
                 this.RunAllThreads();
             } else if (process.env.NODE_ENV.trim() === "umbler") {

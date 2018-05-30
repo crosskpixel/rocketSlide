@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//import { customValidators } from './middlewares/Usuario.middleware';
 const path = require("path");
 const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fs = require("fs");
-const expressValidator = require("express-validator");
 const io_server = require("socket.io");
-const index_1 = require("./middlewares/index");
+/*import { LOAD_MODEL } from "./model/index";
+import { LOAD_MIDDLEWARES } from './middlewares/index';*/
 // Criando as configurações para o ExpressJS
 class App {
     constructor() {
@@ -22,10 +23,9 @@ class App {
         this.express.io = this.io;
     }
     config() {
-        this.express.use(express.static(path.join(__dirname, "public")));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: true }));
-        this.express.use(cors({ origin: "*", allowedHeaders: ["Content-Type", "Authorization"] }));
+        this.express.use(cors({ origin: process.env.DOMAIN.trim() || '*', allowedHeaders: ["Content-Type", "Authorization"] }));
         (process.env.NODE_ENV.trim() == "umbler" ? "Servidor iniciado na UMBLER.NET" : this.express.use(logger('dev')));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
@@ -33,17 +33,26 @@ class App {
             req["session"] = {};
             req["ROOT_PATH"] = __dirname;
             // res.setHeader("Cache-Control", 'no-cache');
-            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN.trim() || '*');
             // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
             //  res.setHeader("Access-Control-Allow-Headers", "*");
             // res.setHeader('Access-Control-Allow-Credentials', "false");
             // res.setHeader('Access-Control-Max-Age', '1728000');
+            if (process.env.NODE_ENV.trim() != "test") {
+                if (req.headers['x-forwarded-proto'] != 'https') {
+                    res.redirect("https://" + req.headers.host + req.url);
+                }
+                else {
+                    next();
+                }
+            }
             next();
         });
+        this.express.use(express.static(path.join(__dirname, "public")));
     }
     middleware() {
-        let customValidators = index_1.LOAD_MIDDLEWARES();
-        this.express.use(expressValidator({ customValidators }));
+        // let customValidators = LOAD_MIDDLEWARES();
+        //this.express.use(expressValidator({ customValidators }));
     }
     routes() {
         fs.readdirSync("dist/routes").forEach((file, key) => {

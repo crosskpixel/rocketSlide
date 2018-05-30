@@ -27,7 +27,7 @@
     left: 200%;
   }
   
-  #p1 { background: #242062; }
+  #p1 { background: #050409d1; }
   
   #t2:target #p2,
   #t3:target #p3,
@@ -156,7 +156,7 @@
     height: 170px;
     margin: auto;
     text-align: center;
-    font-size: 80px;
+    font-size: 20px;
     line-height: 1.3;
     transform: translateX(360%);
     -webkit-transform: translateX(360%);
@@ -270,10 +270,10 @@ body {
   height: 300px;
   box-sizing: border-box;
   transition: 0.3s ease;
-  box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 11px 14px 4px rgba(0, 0, 0, 0.35)
 }
 .card:first-child, .card:nth-child(2) {
-  background: #2a2acc8b;
+  background: #050409d1;
   height: 8px;
   border-radius: 5px 5px 0 0;
   padding: 0;
@@ -281,7 +281,7 @@ body {
 }
 .card:first-child {
   margin: 0 20px;
-  background: #2a2acccb;
+  background: #0504097a;
 }
 .card:nth-child(2) {
   margin: 0 10px;
@@ -307,26 +307,28 @@ h1 {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 700;
   font-size: 3rem;
-  color: #00bfc2;
+  color: black;
   margin: 0;
 }
 p {
   margin-top: 0;
 }
 a {
-  color: #00ced1;
+  color: #3568d9;
+  text-decoration: underline;
   text-decoration: none;
   position: relative;
+  text-decoration: 
 }
-a:before {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  width: 0%;
-  border-bottom: 2px solid #00ced1;
-  transition: 0.3s;
-}
+
 a:hover:before {
   width: 80%;
+}
+
+.removeBefore:before{
+  color:blue !important;
+}
+
+.propaganda{
+  margin:5%;width: 90%;height: 300px;background-color: transparent;
 }

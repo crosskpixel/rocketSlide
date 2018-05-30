@@ -1,4 +1,4 @@
-import { customValidators } from './middlewares/Usuario.middleware';
+//import { customValidators } from './middlewares/Usuario.middleware';
 import * as path from 'path';
 import * as express from 'express';
 import * as logger from 'morgan';
@@ -9,8 +9,8 @@ import * as fs from 'fs';
 import * as expressValidator from 'express-validator';
 import * as io_server from "socket.io";
 
-import { LOAD_MODEL } from "./model/index";
-import { LOAD_MIDDLEWARES } from './middlewares/index';
+/*import { LOAD_MODEL } from "./model/index";
+import { LOAD_MIDDLEWARES } from './middlewares/index';*/
 // Criando as configurações para o ExpressJS
 class App {
     // Instancia dele
@@ -29,10 +29,9 @@ class App {
     }
 
     private config(): void {
-        this.express.use(express.static(path.join(__dirname, "public")));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: true }));
-        this.express.use(cors({ origin: process.env.DOMAIN.trim(), allowedHeaders: ["Content-Type", "Authorization"] }));
+        this.express.use(cors({ origin: process.env.DOMAIN.trim() || '*', allowedHeaders: ["Content-Type", "Authorization"] }));
         (process.env.NODE_ENV.trim() == "umbler" ? "Servidor iniciado na UMBLER.NET" : this.express.use(logger('dev')));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
@@ -40,18 +39,27 @@ class App {
             req["session"] = {};
             req["ROOT_PATH"] = __dirname;
             // res.setHeader("Cache-Control", 'no-cache');
-            res.setHeader('Access-Control-Allow-Origin',process.env.DOMAIN.trim());
+            res.setHeader('Access-Control-Allow-Origin', process.env.DOMAIN.trim() || '*');
             // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
             //  res.setHeader("Access-Control-Allow-Headers", "*");
             // res.setHeader('Access-Control-Allow-Credentials', "false");
             // res.setHeader('Access-Control-Max-Age', '1728000');
-            next();
+            if (process.env.NODE_ENV.trim() != "test") {
+                if (req.headers['x-forwarded-proto'] != 'https') {
+                    res.redirect("https://" + req.headers.host + req.url);
+                } else {
+                    next();
+                }
+            } else {
+                next();
+            }
         });
+        this.express.use(express.static(path.join(__dirname, "public")));
     }
 
     private middleware(): void {
-        let customValidators = LOAD_MIDDLEWARES();
-        this.express.use(expressValidator({ customValidators }));
+        // let customValidators = LOAD_MIDDLEWARES();
+        //this.express.use(expressValidator({ customValidators }));
     }
 
     private routes(): void {

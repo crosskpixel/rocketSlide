@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/Init.js",
-    "test": "set NODE_ENV=test && nodemon dist/Init.js",
+    "test": "set NODE_ENV=test && set DOMAIN=* && nodemon dist/Init.js",
     "dev": "set NODE_ENV=dev && nodemon dist/Init.js"
   },
   "author": "",
